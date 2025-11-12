@@ -9,7 +9,7 @@ description = ""
 authors = ["Mikhail Romanov <miroshama@gmail.com>"]
 readme = "README.md"
 packages = [
- { include = "labyrinth_game" },
+ { include = "labyrinth_game", from = "." },
 ]
 
 [tool.poetry.dependencies]
