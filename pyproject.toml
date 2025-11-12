@@ -1,3 +1,7 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.poetry]
 name = "project1-romanov-mikhail-m25-555"
 version = "0.1.0"
@@ -11,7 +15,5 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.12"
 
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.poetry.scripts]
+project = "labyrinth_game.main:main"
