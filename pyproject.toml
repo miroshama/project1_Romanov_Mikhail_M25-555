@@ -4,6 +4,9 @@ version = "0.1.0"
 description = ""
 authors = ["Mikhail Romanov <miroshama@gmail.com>"]
 readme = "README.md"
+packages = [
+ { include = "labyrinth_game" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.12"
