@@ -15,3 +15,6 @@ package-install: build
 	
 clean:
 	rm -rf dist/ *.egg-info/
+	
+lint:
+	poetry run ruff check .
