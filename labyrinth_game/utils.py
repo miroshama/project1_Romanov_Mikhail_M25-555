@@ -1,8 +1,27 @@
-# utils.py
+# labyrinth_game/utils.py
+def show_help():
+    print("\nДоступные команды:")
+    print("  go <direction>  - перейти в направлении (north/south/east/west)")
+    print("  look            - осмотреть текущую комнату")
+    print("  take <item>     - поднять предмет")
+    print("  use <item>      - использовать предмет из инвентаря")
+    print("  inventory       - показать инвентарь")
+    print("  solve           - попытаться решить загадку в комнате")
+    print("  quit            - выйти из игры")
+    print("  help            - показать это сообщение")
 
 from .constants import ROOMS
 
+def get_input(prompt="> "):
+    # Запрос ввода пользователя
 
+    try:
+        user_input = input(prompt)
+        return user_input.strip()
+    except (KeyboardInterrupt, EOFError):
+        print("\nВыход из игры.")
+        return "quit"
+    
 def describe_current_room(game_state):
     # Выводит полное описание текущей комнаты
 

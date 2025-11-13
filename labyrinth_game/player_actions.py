@@ -2,18 +2,6 @@
 
 from .constants import ROOMS
 
-
-def get_input(prompt="> "):
-    # Запрос ввода пользователя
-
-    try:
-        user_input = input(prompt)
-        return user_input.strip()
-    except (KeyboardInterrupt, EOFError):
-        print("\nВыход из игры.")
-        return "quit"
-
-
 def show_inventory(game_state):
     # Отображает содержимое инвентаря игрока
 
@@ -25,3 +13,16 @@ def show_inventory(game_state):
         print("\nВаш инвентарь:")
         for i, item in enumerate(inventory, 1):
             print(f"  {i}. {item}")
+
+def get_input(prompt="> "):
+    # Запрос ввода пользователя
+
+    try:
+        user_input = input(prompt)
+        return user_input.strip()
+    except (KeyboardInterrupt, EOFError):
+        print("\nВыход из игры.")
+        return "quit"
+    
+'''def move_player(game_state: dict, direction: str):
+    if direction in ROOMS[game_state['current_room']]['exits']:'''
