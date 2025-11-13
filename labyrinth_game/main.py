@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from .player_actions import show_inventory
+from .player_actions import show_inventory, get_input
 from .utils import describe_current_room
 
 # Функция для обработки пользовательских команд
@@ -13,6 +13,9 @@ def process_command(game_state: dict, command: str) -> None:
         case "quit":
             game_state["game_over"] = True
             print("Выход из игры.")
+        case _:
+            game_state["game_over"]- True
+            print("Выход из игры")
 
 
 def main():
@@ -27,5 +30,5 @@ def main():
     describe_current_room(game_state=game_state)
 
     while not game_state["game_over"]:
-        user_cmd = input()
+        user_cmd = get_input()
         process_command(game_state=game_state, command=user_cmd)

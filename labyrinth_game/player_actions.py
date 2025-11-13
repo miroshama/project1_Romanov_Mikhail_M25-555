@@ -3,6 +3,17 @@
 from .constants import ROOMS
 
 
+def get_input(prompt="> "):
+    # Запрос ввода пользователя
+
+    try:
+        user_input = input(prompt)
+        return user_input.strip()
+    except (KeyboardInterrupt, EOFError):
+        print("\nВыход из игры.")
+        return "quit"
+
+
 def show_inventory(game_state):
     # Отображает содержимое инвентаря игрока
 
