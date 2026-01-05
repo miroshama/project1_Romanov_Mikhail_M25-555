@@ -1,26 +1,7 @@
 # labyrinth_game/utils.py
-def show_help():
-    print("\nДоступные команды:")
-    print("  go <direction>  - перейти в направлении (north/south/east/west)")
-    print("  look            - осмотреть текущую комнату")
-    print("  take <item>     - поднять предмет")
-    print("  use <item>      - использовать предмет из инвентаря")
-    print("  inventory       - показать инвентарь")
-    print("  solve           - попытаться решить загадку в комнате")
-    print("  quit            - выйти из игры")
-    print("  help            - показать это сообщение")
-
+import math as ma
 from .constants import ROOMS
 
-def get_input(prompt="> "):
-   '''Функция ввода'''
-    try:
-        user_input = input(prompt)
-        return user_input.strip()
-    except (KeyboardInterrupt, EOFError):
-        print("\nВыход из игры.")
-        return "quit"
-    
 def describe_current_room(game_state):
     '''Функция вывода полного описания текущей комнаты'''
 
@@ -31,15 +12,9 @@ def describe_current_room(game_state):
         print(f"Ошибка: комната '{current_room_name}' не найдена!")
         return
 
-    # Название комнаты в верхнем регистре
-
     print(f"\n== {current_room_name.upper()} ==")
 
-    # Описание комнаты
-
     print(f"{room['description']}")
-
-    # Список видимых предметов
 
     if room["items"]:
         print("\nЗаметные предметы:")
@@ -48,7 +23,6 @@ def describe_current_room(game_state):
     else:
         print("\nЗаметные предметы: нет")
 
-    # Доступные выходы
     if room["exits"]:
         print("\nВыходы:")
         for direction, target_room in room["exits"].items():
@@ -56,7 +30,27 @@ def describe_current_room(game_state):
     else:
         print("\nВыходы: нет")
 
-    # Сообщение о наличии загадки
-
     if room["puzzle"] is not None:
         print("\nКажется, здесь есть загадка (используйте команду solve).")
+
+# Функция генерации "случайных" чисел
+def pseudo_random(seed: int, modulo: int) -> int:
+  '''
+  seed - количество шагов,
+  modulo - целое число для определения диапазона результата
+  '''
+  rng_number = ma.sin(seed) * 12.9898 * 43758.5453
+  rng_number_final = round((rng_number - ma.floor(rng_number)) * modulo)
+  
+  return rng_number_final
+
+def show_help():
+    print("\nДоступные команды:")
+    print("  go <direction>  - перейти в направлении (north/south/east/west)")
+    print("  look            - осмотреть текущую комнату")
+    print("  take <item>     - поднять предмет")
+    print("  use <item>      - использовать предмет из инвентаря")
+    print("  inventory       - показать инвентарь")
+    print("  solve           - попытаться решить загадку в комнате")
+    print("  quit            - выйти из игры")
+    print("  help            - показать это сообщение")
