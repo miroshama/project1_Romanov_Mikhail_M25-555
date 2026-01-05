@@ -26,4 +26,4 @@
 
 ## 🎥 Пример игры на asciinema
 
-
+[![asciicast](https://asciinema.org/a/JK36N98Cn1DRHE74K9Bheigb4.svg)](https://asciinema.org/a/JK36N98Cn1DRHE74K9Bheigb4)
