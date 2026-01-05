@@ -13,8 +13,7 @@ def show_help():
 from .constants import ROOMS
 
 def get_input(prompt="> "):
-    # Запрос ввода пользователя
-
+   '''Функция ввода'''
     try:
         user_input = input(prompt)
         return user_input.strip()
@@ -23,7 +22,7 @@ def get_input(prompt="> "):
         return "quit"
     
 def describe_current_room(game_state):
-    # Выводит полное описание текущей комнаты
+    '''Функция вывода полного описания текущей комнаты'''
 
     current_room_name = game_state["current_room"]
     room = ROOMS.get(current_room_name)

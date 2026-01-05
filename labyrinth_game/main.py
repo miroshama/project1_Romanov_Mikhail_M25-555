@@ -3,10 +3,8 @@
 from .player_actions import show_inventory, get_input
 from .utils import show_help, describe_current_room
 
-# Функция для обработки пользовательских команд
-
-
 def process_command(game_state: dict, command: str) -> None:
+    '''Функция для обработки пользовательских команд'''
     splited_command = command.split()
 
     match splited_command[0].lower():
@@ -23,6 +21,7 @@ def process_command(game_state: dict, command: str) -> None:
 
 
 def main():
+    '''Основной игровой цикл'''
     game_state = {
         "player_inventory": [],  # Инвентарь игрока
         "current_room": "entrance",  # Текущая комната

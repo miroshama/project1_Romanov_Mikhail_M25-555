@@ -3,8 +3,7 @@
 from .constants import ROOMS
 
 def show_inventory(game_state):
-    # Отображает содержимое инвентаря игрока
-
+    '''Функция отображения инвентаря'''
     inventory = game_state.get("player_inventory", [])
 
     if not inventory:
@@ -15,7 +14,7 @@ def show_inventory(game_state):
             print(f"  {i}. {item}")
 
 def get_input(prompt="> "):
-    # Запрос ввода пользователя
+    '''Функция ввода пользователя'''
 
     try:
         user_input = input(prompt)
