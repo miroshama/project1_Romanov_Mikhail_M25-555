@@ -33,6 +33,43 @@ def describe_current_room(game_state):
     if room["puzzle"] is not None:
         print("\nКажется, здесь есть загадка (используйте команду solve).")
 
+def solve_puzzle(game_state: dict) -> None:
+  '''
+  Функция решения загадки
+
+  game_state - текущее состояние игры
+  '''
+  if ROOMS[game_state['current_room']]['puzzle'] is None:
+    print("Загадок здесь нет.")
+    
+  else:
+    print(f"{ROOMS[game_state['current_room']]['puzzle'][0]}")
+    users_answer = input("Ваш ответ: ")
+    
+    if (users_answer.lower() == ROOMS[game_state['current_room']]['puzzle'][1].lower() or ROOMS[game_state['current_room']]['puzzle'][1] in NUMBERS and NUMBERS[ROOMS[game_state['current_room']]['puzzle'][1]] == users_answer.lower()): # noqa: E501
+      print("Загадка решена верно!")
+      ROOMS[game_state['current_room']]['puzzle'] = None
+      
+      if game_state['current_room'] == "hall":
+        game_state['player_inventory'].append('torch')
+        
+      elif game_state['current_room'] == "trap_room":
+        game_state['player_inventory'].append('coin')
+      
+      elif game_state['current_room'] == "library":
+        game_state['player_inventory'].append('long_sword')
+      
+      print(f"Ваша награда: {game_state['player_inventory'][-1]}")
+      
+    else:
+        
+      
+      if game_state['current_room'] == "trap_room":
+        trigger_trap(game_state=game_state)
+        
+      else:
+        print("Неверно. Попробуйте снова.")
+
 def pseudo_random(seed: int, modulo: int) -> int:
   '''
   Функция генерации псевдо-случайных чисел
