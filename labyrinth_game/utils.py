@@ -1,6 +1,19 @@
 # labyrinth_game/utils.py
 import math as ma
-from .constants import ROOMS
+
+from .constants import ( 
+  BEAST_DMG_PROBABILITY,
+  COMMANDS,
+  EVENT1_DEATH_DMG,
+  EVENT2_DEATH_DMG,
+  EVENT_COUNT,
+  EVENT_INTENSIVITY,
+  EVENT_PROBABILITY,
+  NUMBERS,
+  ROOMS,
+  TRAP_DMG_PROBABILITY,
+)
+
 
 def describe_current_room(game_state):
     '''Функция вывода полного описания текущей комнаты'''
@@ -97,6 +110,19 @@ def attempt_open_treasure(game_state: dict) -> None:
     else:
       print("Вы делаете шаг назад, отходя от сундука.")
     
+def show_help(commands_list: dict = COMMANDS) -> None:
+  '''
+  Функция отображения помощи
+
+  commands_list - список команд
+  '''
+  print("\nДоступные команды:")
+  str_lens = [len(list(commands_list.keys())[i]) for i in range(0, len(commands_list))]
+  max_str_len = max(str_lens)
+  
+  for command in commands_list:
+    print(command + ': ' + ' ' * (max_str_len - len(command)) + commands_list[command])
+
 def pseudo_random(seed: int, modulo: int) -> int:
   '''
   Функция генерации псевдо-случайных чисел
@@ -180,14 +206,3 @@ def random_event(game_state: dict) -> None:
       if game_state['current_room'] == "trap_room" and ("torch" not in game_state['player_inventory']): # noqa: E501
         trigger_trap(game_state=game_state)
 
-
-def show_help():
-    print("\nДоступные команды:")
-    print("  go <direction>  - перейти в направлении (north/south/east/west)")
-    print("  look            - осмотреть текущую комнату")
-    print("  take <item>     - поднять предмет")
-    print("  use <item>      - использовать предмет из инвентаря")
-    print("  inventory       - показать инвентарь")
-    print("  solve           - попытаться решить загадку в комнате")
-    print("  quit            - выйти из игры")
-    print("  help            - показать это сообщение")
