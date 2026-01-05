@@ -24,6 +24,6 @@
 1) Использовать ключ (предмет `treasure_key`)
 2) Ввести код (с помощью команды `solve`)
 
-## 🎥 Пример игры на asciinema
+## 🎥 Пример игры на asciinema (С победой за 16 шагов)
 
 [![asciicast](https://asciinema.org/a/JK36N98Cn1DRHE74K9Bheigb4.svg)](https://asciinema.org/a/JK36N98Cn1DRHE74K9Bheigb4)
