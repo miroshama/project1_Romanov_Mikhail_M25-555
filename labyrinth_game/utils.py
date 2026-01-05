@@ -1,7 +1,7 @@
 # labyrinth_game/utils.py
 import math as ma
 
-from .constants import ( 
+from .constants import (
   BEAST_DMG_PROBABILITY,
   COMMANDS,
   EVENT1_DEATH_DMG,
@@ -13,6 +13,7 @@ from .constants import (
   ROOMS,
   TRAP_DMG_PROBABILITY,
 )
+
 
 def describe_current_room(game_state: dict) -> None:
   '''
