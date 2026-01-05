@@ -63,13 +63,41 @@ def solve_puzzle(game_state: dict) -> None:
       
     else:
         
-      
       if game_state['current_room'] == "trap_room":
         trigger_trap(game_state=game_state)
         
       else:
         print("Неверно. Попробуйте снова.")
 
+def attempt_open_treasure(game_state: dict) -> None:
+  '''
+  Функция попытки открытия сундука с сокровищами
+
+  game_state - текущее состояние игры
+  '''
+  if "treasure_key" in game_state['player_inventory']:
+    print("Вы используете ключ, раздаётся щелчок, и крышка сундука поднимается!")
+    ROOMS[game_state['current_room']]['items'].remove('treasure_chest')
+    print(f"В сундуке сокровище! Вы победили за {game_state['steps_taken']} шагов!")
+    game_state['game_over'] = True
+    
+  else:
+    users_answer = input("Сундук заперт. ... Ввести код? (да/нет) ")
+    
+    if users_answer.lower() == "да":
+      users_code = input("Введние код: ")
+      
+      if users_code == ROOMS[game_state['current_room']]['puzzle'][1]:
+        print("Вы правильно вводите код, раздаётся щелчок, и крышка сундука поднимается!")
+        print(f"В сундуке сокровище! Вы победили за {game_state['steps_taken']} шагов!")
+        game_state['game_over'] = True
+      
+      else:
+        print("Код был введён неправильно. Пожалуйста, повторите попытку.")
+        
+    else:
+      print("Вы делаете шаг назад, отходя от сундука.")
+    
 def pseudo_random(seed: int, modulo: int) -> int:
   '''
   Функция генерации псевдо-случайных чисел
