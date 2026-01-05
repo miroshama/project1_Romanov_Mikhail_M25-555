@@ -98,7 +98,8 @@ def use_item(game_state: dict, item_name: str) -> None:
         game_state['player_inventory'].append('treasure_key')
     
     elif item_name == "old_armor":
-      print("В вашем распоряжении старые доспехи, которые могут выручить в опасной ситуации.")
+      print("В вашем распоряжении старые доспехи," 
+      " которые могут выручить в опасной ситуации.")
     
     elif item_name == "treasure_key":
       if game_state['current_room'] == 'treasure_room':

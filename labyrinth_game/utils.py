@@ -18,7 +18,7 @@ from .constants import (
 def describe_current_room(game_state: dict) -> None:
   '''
   Функция описания текущей комнаты
-  
+
   game_state - текущее состояние игры
   '''
   current_player_room = game_state['current_room']
@@ -27,12 +27,13 @@ def describe_current_room(game_state: dict) -> None:
   print(f"\n== {current_player_room.upper()} ==")
   
   if len(current_room_info['items']) > 0:
-    print(f"Заметные предметы: {', '.join(current_room_info['items'])}") # noqa: E501
+    print(f"Заметные предметы: {', '.join(current_room_info['items'])}")
   else:
     print("В комнате не видно никаких предметов.")
   
   
-  print(f"Выходы: {', '.join([i + ' - ' + current_room_info['exits'][i] for i in current_room_info['exits']])}") # noqa: E501
+  print(f"Выходы: {', '.join([i + ' - ' +
+  current_room_info['exits'][i] for i in current_room_info['exits']])}")
   
   if current_room_info['puzzle'] is not None:
     print("Кажется, здесь есть загадка (используйте команду solve).")
@@ -95,7 +96,8 @@ def attempt_open_treasure(game_state: dict) -> None:
       users_code = input("Введние код: ")
       
       if users_code == ROOMS[game_state['current_room']]['puzzle'][1]:
-        print("Вы правильно вводите код, раздаётся щелчок, и крышка сундука поднимается!")
+        print("Вы правильно вводите код, раздаётся щелчок,"
+              " и крышка сундука поднимается!")
         print(f"В сундуке сокровище! Вы победили за {game_state['steps_taken']} шагов!")
         game_state['game_over'] = True
       
@@ -135,22 +137,26 @@ def trigger_trap(game_state: dict) -> None:
   print("\nЛовушка активирована! Пол стал дрожать...")
   
   if len(game_state['player_inventory']) > 0:
-    rng_item_index = pseudo_random(seed=game_state['steps_taken'], modulo=len(game_state['player_inventory'])-1)
+    rng_item_index = pseudo_random(seed=game_state['steps_taken'],
+                                    modulo=len(game_state['player_inventory'])-1)
     deleted_item = game_state['player_inventory'].pop(rng_item_index)
     print(f"Вы смогли выбраться, но в процессе потеряли {deleted_item}.")
     
   else:
-    rng_damage = pseudo_random(seed=game_state['steps_taken'], modulo=TRAP_DMG_PROBABILITY)
+    rng_damage = pseudo_random(seed=game_state['steps_taken'],
+                                modulo=TRAP_DMG_PROBABILITY)
     
     if rng_damage < EVENT1_DEATH_DMG:
     
       if "old_armor" in game_state['player_inventory']:
-        print("Вам повезло, что на вас были старые доспехи. Вы избежали смертельного урона.")
+        print("Вам повезло, что на вас были старые доспехи." \
+        " Вы избежали смертельного урона.")
         print("Ваши доспехи сломались.")
         game_state['player_inventory'].remove('old_armor')
         
       else: 
-        print("Вы не успеваете увернуться, и на вас падает каменная плита. Игра окончена!")
+        print("Вы не успеваете увернуться, "
+               "и на вас падает каменная плита. Игра окончена!")
         game_state['game_over'] = True
       
     else:
