@@ -14,35 +14,30 @@ from .constants import (
   TRAP_DMG_PROBABILITY,
 )
 
-def describe_current_room(game_state):
-    '''Функция вывода полного описания текущей комнаты'''
-    current_room_name = game_state["current_room"]
-    room = ROOMS.get(current_room_name)
+def describe_current_room(game_state: dict) -> None:
+  '''
+  Функция описания текущей комнаты
+  
+  game_state - текущее состояние игры
+  '''
+  current_player_room = game_state['current_room']
+  current_room_info = ROOMS[current_player_room]
+  
+  print(f"\n== {current_player_room.upper()} ==")
+  
+  if len(current_room_info['items']) > 0:
+    print(f"Заметные предметы: {', '.join(current_room_info['items'])}") # noqa: E501
+  else:
+    print("В комнате не видно никаких предметов.")
+  
+  
+  print(f"Выходы: {', '.join([i + ' - ' + current_room_info['exits'][i] for i in current_room_info['exits']])}") # noqa: E501
+  
+  if current_room_info['puzzle'] is not None:
+    print("Кажется, здесь есть загадка (используйте команду solve).")
+  else:
+    print("Загадок здесь нет.")
 
-    if not room:
-        print(f"Ошибка: комната '{current_room_name}' не найдена!")
-        return
-
-    print(f"\n== {current_room_name.upper()} ==")
-
-    print(f"{room['description']}")
-
-    if room["items"]:
-        print("\nЗаметные предметы:")
-        for item in room["items"]:
-            print(f"  - {item}")
-    else:
-        print("\nЗаметные предметы: нет")
-
-    if room["exits"]:
-        print("\nВыходы:")
-        for direction, target_room in room["exits"].items():
-            print(f"  {direction} -> {target_room}")
-    else:
-        print("\nВыходы: нет")
-
-    if room["puzzle"] is not None:
-        print("\nКажется, здесь есть загадка (используйте команду solve).")
 
 def solve_puzzle(game_state: dict) -> None:
   '''
