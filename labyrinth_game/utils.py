@@ -33,16 +33,92 @@ def describe_current_room(game_state):
     if room["puzzle"] is not None:
         print("\nКажется, здесь есть загадка (используйте команду solve).")
 
-# Функция генерации "случайных" чисел
 def pseudo_random(seed: int, modulo: int) -> int:
   '''
+  Функция генерации псевдо-случайных чисел
+
   seed - количество шагов,
   modulo - целое число для определения диапазона результата
   '''
+
   rng_number = ma.sin(seed) * 12.9898 * 43758.5453
   rng_number_final = round((rng_number - ma.floor(rng_number)) * modulo)
   
   return rng_number_final
+
+def trigger_trap(game_state: dict) -> None:
+  '''Функция имитации срабатывания ловушки в комнате '''
+
+  print("\nЛовушка активирована! Пол стал дрожать...")
+  
+  if len(game_state['player_inventory']) > 0:
+    rng_item_index = pseudo_random(seed=game_state['steps_taken'], modulo=len(game_state['player_inventory'])-1)
+    deleted_item = game_state['player_inventory'].pop(rng_item_index)
+    print(f"Вы смогли выбраться, но в процессе потеряли {deleted_item}.")
+    
+  else:
+    rng_damage = pseudo_random(seed=game_state['steps_taken'], modulo=TRAP_DMG_PROBABILITY)
+    
+    if rng_damage < EVENT1_DEATH_DMG:
+    
+      if "old_armor" in game_state['player_inventory']:
+        print("Вам повезло, что на вас были старые доспехи. Вы избежали смертельного урона.")
+        print("Ваши доспехи сломались.")
+        game_state['player_inventory'].remove('old_armor')
+        
+      else: 
+        print("Вы не успеваете увернуться, и на вас падает каменная плита. Игра окончена!")
+        game_state['game_over'] = True
+      
+    else:
+      print("Вы успеваете увернуться от падающей плиты.")
+
+def random_event(game_state: dict) -> None:
+  '''
+  Функция генерации случайных событий
+  '''
+
+  rng_event_trigger = pseudo_random(seed=game_state['steps_taken'], modulo=EVENT_PROBABILITY) # noqa: E501
+  
+  if rng_event_trigger < EVENT_INTENSIVITY:
+    rng_event_number = pseudo_random(seed=game_state['steps_taken'], modulo=EVENT_COUNT) # noqa: E501
+    
+    print("\nСобытие:")
+    
+    if rng_event_number == 0:
+      print("Вы замечаете что-то блестящее на полу, это золотая монета (coin).")
+      print("Вы подбираете монету.")
+      game_state['player_inventory'].append('coin')
+      
+    elif rng_event_number == 1:
+    
+      print("Вы слышите шорох в темном углу комнаты. Ваш пульс заметно учащается.")
+      if "sword" in game_state['player_inventory']:
+        print("Вы обнажаете свой меч. Существо с гортанным рыком пятится назад и скрывается темноте.") # noqa: E501
+        
+      else:
+        rng_damage_beast = pseudo_random(seed=game_state['steps_taken'], modulo=BEAST_DMG_PROBABILITY) # noqa: E501
+        if rng_damage_beast < EVENT2_DEATH_DMG:
+    
+          if "old_armor" in game_state['player_inventory']:
+            print("Вам повезло, что на вас были старые доспехи. Существо когтями проходится по вашей броне и скрывается в темноте.") # noqa: E501
+            print("Ваши доспехи пришли в негодность.")
+            game_state['player_inventory'].remove('old_armor')
+        
+          else: 
+            print("Существо прыгает на вас и наносит смертельную рану.")
+            print("Вы истекаете кровью на полу комнаты. Игра окончена")
+            game_state['game_over'] = True
+            
+        else:
+          print("Существо прыгает в вашу сторону, но вам везет, и оно промахивается.")
+          print("После чего скрывается во тьме.")
+        
+    elif rng_event_number == 2:
+    
+      if game_state['current_room'] == "trap_room" and ("torch" not in game_state['player_inventory']): # noqa: E501
+        trigger_trap(game_state=game_state)
+
 
 def show_help():
     print("\nДоступные команды:")
