@@ -14,7 +14,6 @@ from .constants import (
   TRAP_DMG_PROBABILITY,
 )
 
-
 def describe_current_room(game_state):
     '''Функция вывода полного описания текущей комнаты'''
     current_room_name = game_state["current_room"]
