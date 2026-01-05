@@ -4,7 +4,6 @@ from .constants import ROOMS
 
 def describe_current_room(game_state):
     '''Функция вывода полного описания текущей комнаты'''
-
     current_room_name = game_state["current_room"]
     room = ROOMS.get(current_room_name)
 
@@ -105,7 +104,6 @@ def pseudo_random(seed: int, modulo: int) -> int:
   seed - количество шагов,
   modulo - целое число для определения диапазона результата
   '''
-
   rng_number = ma.sin(seed) * 12.9898 * 43758.5453
   rng_number_final = round((rng_number - ma.floor(rng_number)) * modulo)
   
@@ -113,7 +111,6 @@ def pseudo_random(seed: int, modulo: int) -> int:
 
 def trigger_trap(game_state: dict) -> None:
   '''Функция имитации срабатывания ловушки в комнате '''
-
   print("\nЛовушка активирована! Пол стал дрожать...")
   
   if len(game_state['player_inventory']) > 0:
@@ -142,7 +139,6 @@ def random_event(game_state: dict) -> None:
   '''
   Функция генерации случайных событий
   '''
-
   rng_event_trigger = pseudo_random(seed=game_state['steps_taken'], modulo=EVENT_PROBABILITY) # noqa: E501
   
   if rng_event_trigger < EVENT_INTENSIVITY:
